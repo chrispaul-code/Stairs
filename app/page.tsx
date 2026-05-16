@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
 import { NoiseBackground } from "@/components/ui/noise-background";
+import LampDemo from "@/components/ui/lamp";
 
 /* ─── Inline CSS (preserves all original styles) ─── */
 const globalStyles = `
@@ -456,6 +457,25 @@ function Navbar({
 }
 
 /* ─── Hero ─── */
+function NoiseBackgroundDemo() {
+  return (
+    <div className="flex justify-center">
+      <NoiseBackground
+        containerClassName="w-fit p-2 rounded-full mx-auto"
+        gradientColors={[
+          "rgb(255, 100, 150)",
+          "rgb(100, 150, 255)",
+          "rgb(255, 200, 100)",
+        ]}
+      >
+        <button className="h-full w-full cursor-pointer rounded-full bg-black px-6 py-3 text-white shadow-[0px_1px_0px_0px_rgba(255,255,255,0.1)_inset] transition-all duration-100 active:scale-95">
+  Start publishing &rarr;
+</button>
+      </NoiseBackground>
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section id="hero">
@@ -474,20 +494,7 @@ function Hero() {
 
 
   
-    <div className="flex justify-center">
-      <NoiseBackground
-        containerClassName="w-fit p-2 rounded-full mx-auto"
-        gradientColors={[
-          "rgb(255, 100, 150)",
-          "rgb(100, 150, 255)",
-          "rgb(255, 200, 100)",
-        ]}>
-        <button
-          className="h-full w-full cursor-pointer rounded-full bg-linear-to-r from-neutral-100 via-neutral-100 to-white px-4 py-2 text-black shadow-[0px_2px_0px_0px_var(--color-neutral-50)_inset,0px_0.5px_1px_0px_var(--color-neutral-400)] transition-all duration-100 active:scale-98 dark:from-black dark:via-black dark:to-neutral-900 dark:text-white dark:shadow-[0px_1px_0px_0px_var(--color-neutral-950)_inset,0px_1px_0px_0px_var(--color-neutral-800)]">
-          Start publishing &rarr;
-        </button>
-      </NoiseBackground>
-    </div>
+    <NoiseBackgroundDemo/>
   
 
 
@@ -498,80 +505,35 @@ function Hero() {
 }
 
 /* ─── Organisations ─── */
-const LampContainer = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  return (
-    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden bg-black py-24 rounded-3xl">
-
-      {/* LIGHT EFFECT WRAPPER */}
-      <div className="absolute inset-0 flex items-center justify-center z-0">
-
-        {/* LEFT LIGHT */}
-        <div
-          className="absolute right-1/2 h-80 w-[28rem] bg-gradient-to-b from-red-500 via-red-500/40 to-transparent opacity-30 blur-3xl"
-          style={{
-            clipPath: "polygon(100% 0%, 0% 0%, 100% 100%)",
-          }}
-        />
-
-        {/* RIGHT LIGHT */}
-        <div
-          className="absolute left-1/2 h-80 w-[28rem] bg-gradient-to-b from-orange-500 via-orange-500/40 to-transparent opacity-30 blur-3xl"
-          style={{
-            clipPath: "polygon(0% 0%, 100% 0%, 0% 100%)",
-          }}
-        />
-
-        {/* TOP GLOW */}
-        <div className="absolute top-0 h-40 w-full bg-gradient-to-b from-red-900/20 to-transparent" />
-      </div>
-
-      {/* CONTENT */}
-      <div className="relative z-10 flex flex-col items-center text-center px-5">
-        {children}
-      </div>
-    </div>
-  );
-};
-
 /* ─── Organisations ─── */
 function Organisations() {
   const doubled = [...orgs, ...orgs];
 
   return (
-    <section id="organisations">
-      
-      {/* Lamp Heading */}
-      <LampContainer>
-      <motion.h1
-        initial={{ opacity: 0.5, y: 100 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.3,
-          duration: 0.8,
-          ease: "easeInOut",
-        }}
-        className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
-      >
-        Build lamps <br /> the right way
-      </motion.h1>
-    </LampContainer>
+    <section
+      id="organisations"
+      className="relative overflow-hidden bg-white py-10"
+    >
+      {/* Lamp Section */}
+      <LampDemo />
 
-      {/* Organisation Cards */}
-      <div className="org-track-wrapper reveal">
+      {/* Logo Slider */}
+      <div className="org-track-wrapper reveal mt-[-3rem] relative z-50">
         <div className="org-track">
           {doubled.map((org, i) => (
             <div className="org-card" key={i}>
               <div className="org-img-box">
                 <i
                   className={org.icon}
-                  style={{ fontSize: "1.8rem", color: "#bbb" }}
+                  style={{
+                    fontSize: "1.8rem",
+                    color: "#9ca3af",
+                  }}
                 />
                 <br />
-                {org.name}
+                <span className="text-gray-600 font-medium">
+                  {org.name}
+                </span>
               </div>
             </div>
           ))}
@@ -580,7 +542,6 @@ function Organisations() {
     </section>
   );
 }
-
 
 
 /* ─── Why Choose Us ─── */
